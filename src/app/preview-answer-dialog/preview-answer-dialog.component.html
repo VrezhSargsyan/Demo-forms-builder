@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>My Answers</h2>
+<mat-dialog-content class="mat-typography">
+
+  <ul class="list-unstyled">
+    <li *ngFor="let service of services">
+      <p><b>Selected service:</b> {{service}}</p>
+    </li>
+    <li>
+      <p><b>About me:</b> {{answers.about_yourself}}</p>
+    </li>
+    <li>
+      <p><b>Question:</b> {{answers.add_question}} - <b>Answer:</b> {{answers.more_information}}</p>
+    </li>
+    <li *ngFor="let answerOption of answers.add_answer_options">
+      <p><b>Answer option:</b> {{answerOption.new_answer_option}}</p>
+    </li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+
+

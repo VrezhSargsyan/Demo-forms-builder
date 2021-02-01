@@ -1,0 +1,65 @@
+<div class="container">
+  <h1>{{title}}</h1>
+
+  <form class="mb-4" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.getRawValue())">
+    <h4>Please tell us about yourself</h4>
+
+    <mat-form-field class="w-50">
+      <mat-label>Leave Your Comment Here</mat-label>
+
+      <textarea matInput formControlName="about_yourself"></textarea>
+    </mat-form-field>
+
+    <h4 class="mt-4">Please select all the services you'll need</h4>
+
+    <div class="d-flex flex-column">
+      <mat-checkbox formControlName="software_development" value="Software Development" (change)="selectServices($event)">Software Development</mat-checkbox>
+      <mat-checkbox formControlName="customer_support" value="Customer Support" (change)="selectServices($event)">Customer Support</mat-checkbox>
+      <mat-checkbox formControlName="other" value="Other" (change)="selectServices($event)">Other</mat-checkbox>
+    </div>
+
+    <mat-divider class="my-4"></mat-divider>
+
+    <h4>Add A Question</h4>
+
+    <div class="d-flex flex-column">
+      <mat-form-field class="w-50">
+        <mat-label>Add Question</mat-label>
+
+        <input matInput formControlName="add_question"/>
+
+        <mat-error *ngIf="formGroup.get('add_question').errors && formGroup.get('add_question').errors.required">Question is <strong>required</strong></mat-error>
+      </mat-form-field>
+
+      <div>
+        <mat-form-field class="w-50">
+          <mat-label>Add Answer Option</mat-label>
+          <input matInput formControlName="more_information"/>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="include_option" class="pl-3" (change)="addAnswerOption($event)"></mat-checkbox>
+      </div>
+
+      <div formArrayName="add_answer_options">
+        <div *ngFor="let answerOption of answerOptions.controls; let i = index" [formGroupName]="i">
+          <mat-form-field class="w-50">
+            <mat-label>Answer Option</mat-label>
+
+            <input matInput formControlName="new_answer_option"/>
+          </mat-form-field>
+
+          <button mat-raised-button color="warn" class="ml-3" (click)="deleteOption(i)">Delete Option</button>
+        </div>
+      </div>
+
+      <mat-checkbox formControlName="include_option">Include 'Other' Option</mat-checkbox>
+      <mat-checkbox formControlName="required_question" (change)="toggleRequired($event)">This Question Is Required</mat-checkbox>
+    </div>
+
+    <button mat-stroked-button type="submit" color="primary" class="mt-4" [disabled]="!formGroup.touched">Submit</button>
+  </form>
+
+  <button mat-stroked-button color="warn" (click)="openDialog()" [disabled]="!isSubmitted || isDisabled">Preview My Answers</button>
+
+</div>
+
